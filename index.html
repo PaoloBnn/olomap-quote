@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>oloMAP — Lipidomics Profiling Quote | oloBion</title>
+  <link rel="icon" type="image/png" href="assets/olomap-logo.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img src="assets/olomap-logo.png" alt="oloMAP" class="brand-logo" />
+      </a>
+      <nav class="header-nav">
+        <a href="#pricing">Pricing</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+      <button id="cart-toggle-btn" class="cart-btn" aria-label="Open cart">
+        Cart <span id="cart-count" class="cart-count" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-hero container">
+      <div class="product-info">
+        <p class="eyebrow">Bioinformatics Portal for Metabolomics &amp; Lipidomics</p>
+        <img src="assets/olomap-logo.png" alt="oloMAP" class="hero-logo" />
+        <p class="lede">
+          Quantitative lipidomics profiling for cell, tissue, and biofluid samples.
+          Submit your samples and receive a comprehensive lipid species report —
+          priced simply by the number of samples you send.
+        </p>
+        <ul class="feature-list">
+          <li>Mass-spectrometry–based lipid species quantification</li>
+          <li>Full data report with QC metrics and normalized abundances</li>
+          <li>Volume discounts automatically applied as your order grows</li>
+        </ul>
+      </div>
+
+      <div class="calculator-card">
+        <h2>Get an instant price</h2>
+
+        <label class="field-label" for="qty-input">Number of samples</label>
+        <div class="qty-control">
+          <button type="button" id="qty-decrement" class="qty-btn" aria-label="Decrease">&minus;</button>
+          <input type="number" id="qty-input" value="8" min="0" step="1" inputmode="numeric" />
+          <button type="button" id="qty-increment" class="qty-btn" aria-label="Increase">&plus;</button>
+        </div>
+        <p id="min-warning" class="min-warning" hidden>Minimum order is 8 samples.</p>
+
+        <label class="field-label" for="note-input">Batch label <span class="optional">(optional)</span></label>
+        <input type="text" id="note-input" placeholder="e.g. Mouse liver, cohort A" />
+
+        <div class="price-readout">
+          <div class="price-row">
+            <span>Price per sample</span>
+            <strong id="unit-price">—</strong>
+          </div>
+          <div class="price-row total-row">
+            <span>Batch total <span id="tier-badge" class="tier-badge"></span></span>
+            <strong id="line-total">—</strong>
+          </div>
+          <p id="tier-nudge" class="tier-nudge" hidden></p>
+        </div>
+
+        <button type="button" id="add-to-cart-btn" class="btn btn-primary btn-full">Add batch to cart</button>
+        <button type="button" id="ask-demo-btn" class="btn btn-ghost btn-full">Get a Demo</button>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing-section container">
+      <h2>Volume pricing</h2>
+      <p class="section-sub">The price per sample is based on the total size of each batch you submit.</p>
+      <table id="pricing-table" class="pricing-table">
+        <thead>
+          <tr>
+            <th>Samples per batch</th>
+            <th>Price per sample</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-min="8" data-max="20">
+            <td>8 – 20</td>
+            <td>$25.00</td>
+          </tr>
+          <tr data-min="21" data-max="50">
+            <td>21 – 50</td>
+            <td>$20.00</td>
+          </tr>
+          <tr data-min="51" data-max="100">
+            <td>51 – 100</td>
+            <td>$15.00</td>
+          </tr>
+          <tr data-min="101" data-max="inf">
+            <td>101+</td>
+            <td>$10.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="section-note">Minimum order: 8 samples per batch.</p>
+    </section>
+
+    <section id="how-it-works" class="how-section container">
+      <h2>How it works</h2>
+      <div class="how-grid">
+        <div class="how-card">
+          <span class="how-step">1</span>
+          <h3>Configure your batch</h3>
+          <p>Enter the number of samples in your batch and see the price update instantly.</p>
+        </div>
+        <div class="how-card">
+          <span class="how-step">2</span>
+          <h3>Add batches to your cart</h3>
+          <p>Submitting samples in multiple batches (e.g. different tissues or cohorts)? Add each as its own line item.</p>
+        </div>
+        <div class="how-card">
+          <span class="how-step">3</span>
+          <h3>Request your quote</h3>
+          <p>Download a formal PDF quote with your itemized batches and grand total — ready to share internally or with procurement.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 oloBion. Quote estimates are non-binding. Contact hello@olobion.ai to place an order.</p>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div id="cart-overlay" class="overlay"></div>
+  <aside id="cart-drawer" class="cart-drawer">
+    <div class="cart-drawer-header">
+      <h2>Your cart</h2>
+      <button id="cart-close-btn" class="icon-btn" aria-label="Close cart">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items"></div>
+    <p id="cart-empty" class="cart-empty">No batches added yet.</p>
+    <div class="cart-drawer-footer">
+      <div class="cart-summary-row">
+        <span>Total samples</span>
+        <strong id="cart-samples">0</strong>
+      </div>
+      <div class="cart-summary-row cart-summary-total">
+        <span>Grand total</span>
+        <strong id="cart-grand-total">$0.00</strong>
+      </div>
+      <button id="request-quote-btn" class="btn btn-primary btn-full" disabled>Request formal quote</button>
+      <button id="clear-cart-btn" class="btn btn-ghost btn-full">Clear cart</button>
+    </div>
+  </aside>
+
+  <!-- Quote modal -->
+  <div id="quote-overlay" class="overlay"></div>
+  <div id="quote-modal" class="modal">
+    <div class="modal-header">
+      <h2>Request formal quote</h2>
+      <button id="quote-close-btn" class="icon-btn" aria-label="Close">&times;</button>
+    </div>
+    <form id="quote-form" class="modal-body">
+      <label class="field-label" for="quote-name">Full name</label>
+      <input type="text" id="quote-name" required />
+
+      <label class="field-label" for="quote-company">Company / Institution</label>
+      <input type="text" id="quote-company" required />
+
+      <label class="field-label" for="quote-email">Email</label>
+      <input type="email" id="quote-email" required />
+
+      <label class="field-label" for="quote-phone">Phone <span class="optional">(optional)</span></label>
+      <input type="tel" id="quote-phone" />
+
+      <button type="submit" class="btn btn-primary btn-full">Generate PDF quote</button>
+    </form>
+    <div id="quote-success" class="modal-body" hidden>
+      <p class="success-message">Your quote PDF has been downloaded. We've also noted your details so our team can follow up.</p>
+      <button type="button" class="btn btn-primary btn-full" id="quote-done-btn" onclick="document.getElementById('quote-modal').classList.remove('open'); document.getElementById('quote-overlay').classList.remove('visible');">Done</button>
+    </div>
+  </div>
+
+  <!-- Demo request modal -->
+  <div id="demo-overlay" class="overlay"></div>
+  <div id="demo-modal" class="modal">
+    <div class="modal-header">
+      <h2>Ask for a Demo</h2>
+      <button id="demo-close-btn" class="icon-btn" aria-label="Close">&times;</button>
+    </div>
+    <form id="demo-form" class="modal-body">
+      <label class="field-label" for="demo-email">Email Address</label>
+      <input type="email" id="demo-email" required />
+
+      <label class="field-label" for="demo-name">Name</label>
+      <input type="text" id="demo-name" required />
+
+      <p class="field-label" style="margin-top:20px;">Demo Access</p>
+      <div class="checkbox-list">
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Mouse Plasma (Proteomics, Lipidomics and Metabolomics)" />
+          Mouse Plasma (Proteomics, Lipidomics and Metabolomics)
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Skin Lipidomics" />
+          Skin Lipidomics
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Tomato Leaf Metabolomics" />
+          Tomato Leaf Metabolomics
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Metabolomic analysis of stool samples" />
+          Metabolomic analysis of stool samples
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Proteomics analysis in keratinocytes" />
+          Proteomics analysis in keratinocytes
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" name="demo-access" value="Multiomics analysis of human skin strips" />
+          Multiomics analysis of human skin strips
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">Submit</button>
+    </form>
+    <div id="demo-success" class="modal-body" hidden>
+      <p class="success-message">Thanks! We've opened an email to info@olobion.ai with your demo request — just hit send in your mail app to complete it.</p>
+      <button type="button" class="btn btn-primary btn-full" id="demo-done-btn">Done</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/quote.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
